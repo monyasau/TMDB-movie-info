@@ -1,193 +1,91 @@
-<<<<<<< HEAD
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TheMovieDB movie info</title>
-    <style>
-      div {
-        margin: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <input type="text" id="input" placeholder="Enter a movie name"/>
-    <div id="test"></div>
-    <img src="https://image.tmdb.org/t/p/w500/" alt="" />
-  </body>
-  <script>
-    const apiKey = "0a56ebbfb0d3ff89cede96af6dbb1fb2";
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>TheMovieDB Movie Info Search</title>
+    </head>
+    <body>
+      <input type="text" id="input" placeholder="Enter a movie name"/>
+      <div id="test"></div>
+      <img src="https://image.tmdb.org/t/p/w500/" alt="" />
+    </body>
+    <script>
+      const apiKey = "0a56ebbfb0d3ff89cede96af6dbb1fb2";
 
-    const searchElement = document.getElementById("input");
-    const displayOutput = document.getElementById("test");
+      const searchElement = document.getElementById("input");
+      const displayOutput = document.getElementById("test");
 
-    searchElement.addEventListener("keydown", (event) => {
-      if (event.keyCode === 13) {
-        const searchQuery = searchElement.value;
-        const apiUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchQuery}`;
-        let func = (event) => {
-          fetch(apiUrl)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log("Movie Search Results:", data);
-              displayOutput.innerHTML = "";
+      searchElement.addEventListener("keydown", (event) => {
+        if (event.keyCode === 13) {
+          const searchQuery = searchElement.value;
+          const apiUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchQuery}`;
+          let func = (event) => {
+            fetch(apiUrl)
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then((data) => {
+                console.log("Movie Search Results:", data);
+                displayOutput.innerHTML = "";
 
-              // displayOutput.innerHTML = JSON.stringify(data.results[0]);
+                // displayOutput.innerHTML = JSON.stringify(data.results[0]);
 
-              data.results.forEach((result) => {
-                const resultDiv = document.createElement("div");
-                const titleParagraph = document.createElement("p")
-                const overviewElement = document.createElement("p")
-                const adultElement = document.createElement("p")
-                const releaseDateElement = document.createElement("p")
-                const mediaTypeElement = document.createElement("p")
-                const popularityElement = document.createElement("p")
-                // const mediaTypeElement = document.createElement("p")
-                // const mediaTypeElement = document.createElement("p")
-                const imageElement = document.createElement("img")
-                const posterElement = document.createElement("img")
+                data.results.forEach((result) => {
+                  const resultDiv = document.createElement("div");
+                  const titleParagraph = document.createElement("p")
+                  const overviewElement = document.createElement("p")
+                  const adultElement = document.createElement("p")
+                  const releaseDateElement = document.createElement("p")
+                  const mediaTypeElement = document.createElement("p")
+                  const popularityElement = document.createElement("p")
+                  // const mediaTypeElement = document.createElement("p")
+                  // const mediaTypeElement = document.createElement("p")
+                  const imageElement = document.createElement("img")
+                  const posterElement = document.createElement("img")
 
 
-                imageElement.src=`https://image.tmdb.org/t/p/w500/${result.backdrop_path}`
-                posterElement.src=`https://image.tmdb.org/t/p/w500/${result.poster_path}`
-                resultDiv.textContent = JSON.stringify(result);
-                titleParagraph.textContent = JSON.stringify(result.title);
-                overviewElement.textContent = "Plot / Description: " + JSON.stringify(result.overview)
-                adultElement.textContent = JSON.stringify(result.adult);
-                releaseDateElement.textContent = JSON.stringify(result.release_date);
-                mediaTypeElement.textContent = JSON.stringify(result.media_type);
-                popularityElement.textContent = JSON.stringify(result.popularity);
+                  imageElement.src=`https://image.tmdb.org/t/p/w500/${result.backdrop_path}`
+                  posterElement.src=`https://image.tmdb.org/t/p/w500/${result.poster_path}`
+                  resultDiv.textContent = JSON.stringify(result);
+                  titleParagraph.textContent = JSON.stringify(result.title);
+                  overviewElement.textContent = "Plot / Description: " + JSON.stringify(result.overview)
+                  adultElement.textContent = JSON.stringify(result.adult);
+                  releaseDateElement.textContent = JSON.stringify(result.release_date);
+                  mediaTypeElement.textContent = JSON.stringify(result.media_type);
+                  popularityElement.textContent = JSON.stringify(result.popularity);
 
 
-                displayOutput.appendChild(resultDiv);
-                displayOutput.appendChild(titleParagraph)
-                displayOutput.appendChild(overviewElement)
-                displayOutput.appendChild(adultElement)
-                displayOutput.appendChild(releaseDateElement)
-                displayOutput.appendChild(mediaTypeElement)
-                displayOutput.appendChild(popularityElement)
-                displayOutput.appendChild(overviewElement)
-                // displayOutput.appendChild(imageElement);
-                displayOutput.appendChild(posterElement);
+                  displayOutput.appendChild(resultDiv);
+                  displayOutput.appendChild(titleParagraph)
+                  displayOutput.appendChild(overviewElement)
+                  displayOutput.appendChild(adultElement)
+                  displayOutput.appendChild(releaseDateElement)
+                  displayOutput.appendChild(mediaTypeElement)
+                  displayOutput.appendChild(popularityElement)
+                  displayOutput.appendChild(overviewElement)
+                  // displayOutput.appendChild(imageElement);
+                  displayOutput.appendChild(posterElement);
+                });
+
+                // data.results.forEach((result) => {
+                //   const resultDiv = document.createElement("div");
+                //   resultDiv.textContent = result.title || result.name;
+                //   displayOutput.appendChild(resultDiv);
+                // });
+
+                // "https://image.tmdb.org/t/p/w500/"
+              })
+              .catch((error) => {
+                console.error("Error:", error);
               });
-
-              // data.results.forEach((result) => {
-              //   const resultDiv = document.createElement("div");
-              //   resultDiv.textContent = result.title || result.name;
-              //   displayOutput.appendChild(resultDiv);
-              // });
-
-              // "https://image.tmdb.org/t/p/w500/"
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-        };
-        func();
-      }
-    });
-  </script>
-</html>
-=======
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TheMovieDB movie info</title>
-    <style>
-      div {
-        margin: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <input type="text" id="input" placeholder="Enter a movie name"/>
-    <div id="test"></div>
-    <img src="https://image.tmdb.org/t/p/w500/" alt="" />
-  </body>
-  <script>
-    const apiKey = "0a56ebbfb0d3ff89cede96af6dbb1fb2";
-
-    const searchElement = document.getElementById("input");
-    const displayOutput = document.getElementById("test");
-
-    searchElement.addEventListener("keydown", (event) => {
-      if (event.keyCode === 13) {
-        const searchQuery = searchElement.value;
-        const apiUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchQuery}`;
-        let func = (event) => {
-          fetch(apiUrl)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log("Movie Search Results:", data);
-              displayOutput.innerHTML = "";
-
-              // displayOutput.innerHTML = JSON.stringify(data.results[0]);
-
-              data.results.forEach((result) => {
-                const resultDiv = document.createElement("div");
-                const titleParagraph = document.createElement("p")
-                const overviewElement = document.createElement("p")
-                const adultElement = document.createElement("p")
-                const releaseDateElement = document.createElement("p")
-                const mediaTypeElement = document.createElement("p")
-                const popularityElement = document.createElement("p")
-                // const mediaTypeElement = document.createElement("p")
-                // const mediaTypeElement = document.createElement("p")
-                const imageElement = document.createElement("img")
-                const posterElement = document.createElement("img")
-
-
-                imageElement.src=`https://image.tmdb.org/t/p/w500/${result.backdrop_path}`
-                posterElement.src=`https://image.tmdb.org/t/p/w500/${result.poster_path}`
-                resultDiv.textContent = JSON.stringify(result);
-                titleParagraph.textContent = JSON.stringify(result.title);
-                overviewElement.textContent = "Plot / Description: " + JSON.stringify(result.overview)
-                adultElement.textContent = JSON.stringify(result.adult);
-                releaseDateElement.textContent = JSON.stringify(result.release_date);
-                mediaTypeElement.textContent = JSON.stringify(result.media_type);
-                popularityElement.textContent = JSON.stringify(result.popularity);
-
-
-                displayOutput.appendChild(resultDiv);
-                displayOutput.appendChild(titleParagraph)
-                displayOutput.appendChild(overviewElement)
-                displayOutput.appendChild(adultElement)
-                displayOutput.appendChild(releaseDateElement)
-                displayOutput.appendChild(mediaTypeElement)
-                displayOutput.appendChild(popularityElement)
-                displayOutput.appendChild(overviewElement)
-                // displayOutput.appendChild(imageElement);
-                displayOutput.appendChild(posterElement);
-              });
-
-              // data.results.forEach((result) => {
-              //   const resultDiv = document.createElement("div");
-              //   resultDiv.textContent = result.title || result.name;
-              //   displayOutput.appendChild(resultDiv);
-              // });
-
-              // "https://image.tmdb.org/t/p/w500/"
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-        };
-        func();
-      }
-    });
-  </script>
-</html>
->>>>>>> 7c739124fb76aa0ac926623dc92ff3eccab8feea
+          };
+          func();
+        }
+      });
+    </script>
+  </html>
